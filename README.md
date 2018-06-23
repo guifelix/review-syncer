@@ -64,3 +64,30 @@ Now that you have this data, do something interesting with it, tell us something
 
 - Have fun! [Happy Hacking](https://giphy.com/gifs/charlie-hunnam-gif-hunt-102h4wsmCG2s12)
 
+
+
+-------------------------------------------------------------------------------------------------
+
+
+For this challenge I used the docker container "edersondev/php7" and tried to connect to the official mysql container:
+
+
+here is my docker-composer.yml:
+
+version: '3'
+services:
+  webphp:
+    image: edersondev/php7
+    ports:
+      - "80:80"
+    volumes:
+      - "the_code_path":/var/www/html
+    links:
+     - db
+  db:
+    image: mysql:5.7
+    volumes:
+     - /var/lib/mysql
+    environment:
+     - MYSQL_ROOT_PASSWORD=bold123
+     - MYSQL_DATABASE=bold_reviews
