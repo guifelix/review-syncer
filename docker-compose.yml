@@ -1,0 +1,17 @@
+version: '3'
+services:
+  webphp:
+    image: edersondev/php7
+    ports:
+      - "80:80"
+    volumes:
+      - ~/Desktop/projetos/vanhackathon230618/review_syncer:/var/www/html
+    links:
+     - db
+  db:
+    image: mysql:5.7
+    volumes:
+     - /var/lib/mysql
+    environment:
+     - MYSQL_ROOT_PASSWORD=bold123
+     - MYSQL_DATABASE=bold_reviews
