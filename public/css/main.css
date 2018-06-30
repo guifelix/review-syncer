@@ -1,17 +1,30 @@
 .bold-red{
-    background-color:#DE3626;
+    background-color: #E8332F;
+}
+.bold-white{
+    background-color: #F6F9FB;
+}
+.bold-black{
+    background-color: #2D2D2D;
 }
 
 .bold-font{
-    font-weight: bold;
+    /*font-weight: bold;*/
+    font-family: 'Proxima Nova' !important;
+}
+
+.subtitle{
+    color: #F6F9FB !important;
+    text-decoration: underline;
+    text-decoration-color: #F6F9FB;
 }
 
 
 
 html, body {
-                background-color: #DE3626;
+                /*background-color: #E8332F;*/
                 color: #fff;
-                font-family: 'Raleway', sans-serif;
+                font-family: 'Open Sans', sans-serif;
                 font-weight: 900;
                 height: 100vh;
                 margin: 0;

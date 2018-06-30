@@ -7,11 +7,18 @@ services:
     volumes:
       - ~/Desktop/projetos/vanhackathon230618/review_syncer:/var/www/html
     links:
-     - db
+     - db:mysql
+    environment:
+      WEB_DOCUMENT_ROOT: public
+
   db:
     image: mysql:5.7
+    restart: always
+    ports:
+      - 3306:3306
     volumes:
      - /var/lib/mysql
     environment:
-     - MYSQL_ROOT_PASSWORD=bold123
-     - MYSQL_DATABASE=bold_reviews
+     - MYSQL_DATABASE="bold_reviews"
+     - MYSQL_ROOT_PASSWORD="supersecret"
+     - MYSQL_ROOT_HOST="172.*.*.*"

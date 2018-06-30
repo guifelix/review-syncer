@@ -11,9 +11,6 @@ $.extend( true, $.fn.dataTable.defaults, {
             } );
         }
     } ),
-    language: {
-        url: "{!! URL::asset('datatables-plugins/i18n/Portuguese-Brasil.json') !!}"
-    },
     dom:
         "<'row'<'col-sm-6'l><'col-sm-6'>>" +
         "<'row'<'col-sm-12'tr>>" +

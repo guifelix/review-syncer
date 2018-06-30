@@ -16,9 +16,14 @@
 // });
 
     Route::resource('/', 'HomeController');
+    Auth::routes();
 
     Route::group(['prefix' => 'Reviews', 'namespace' => 'Reviews'], function(){
         Route::get('/','ReviewsController@index')->name('reviews.index');
-        Route::get('jsonReviews','ReviewsController@jsonReviews')->name('jsonReviews');
+        Route::match(['get','post'],'jsonReviews','ReviewsController@jsonReviews')->name('jsonReviews');
+
+        Route::get('/refresh', function () {
+            $refresh = Artisan::call('fetch:reviews');
+        });
 
     });

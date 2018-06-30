@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\FetchReviews'
     ];
 
     /**
@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call('\App\Http\Controllers\ReviewsController@getRestReview')->hourly();
+        // $schedule->call('\App\Http\Controllers\ReviewsController@getRestReview')->hourly();
+        $schedule->command('fetch:reviews')->everyThirtyMinutes();
     }
 
     /**

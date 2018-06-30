@@ -15,13 +15,13 @@ class ShopifyAppReviews extends Migration
     {
         Schema::create('shopify_app_reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('shopify_domain',255);
+            $table->char('shopify_domain',255)->nullable();
             $table->char('app_slug',255);
             $table->integer('star_rating');
-            $table->integer('previous_star_rating');
-            $table->dateTime('updated_at');
-            $table->dateTime('created_at');
-            $table->rememberToken();
+            $table->integer('previous_star_rating')->nullable();
+            // $table->dateTime('updated_at');
+            // $table->dateTime('created_at');
+            $table->string('token', 255);
             $table->timestamps();
         });
     }
