@@ -16,6 +16,7 @@
 
         <!-- Styles -->
         <link href="{{ URL::asset('css/main.css') }}" rel="stylesheet">
+        <link href="{{ URL::asset('components/datatables/css/dataTables.bootstrap.css') }}" rel="stylesheet">
 
         <!-- Bootstrap Core CSS -->
         <link href="{{ URL::asset('components/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -35,27 +36,11 @@
             {{-- @include('layouts.rightpanel') --}}
         </section>
 
-        {{-- <script src="{{ URL::asset('js/jquery-1.10.2.min.js') }}"></script>
-        <script src="{{ URL::asset('js/jquery-migrate-1.2.1.min.js') }}"></script>
-        <script src="{{ URL::asset('js/modernizr.min.js') }}"></script>
-        <script src="{{ URL::asset('js/jquery.sparkline.min.js') }}"></script>
-        <script src="{{ URL::asset('js/toggles.min.js') }}"></script>
-        <script src="{{ URL::asset('js/retina.min.js') }}"></script>
-        <script src="{{ URL::asset('js/jquery.cookies.js') }}"></script>
-        <script src="{{ URL::asset('js/morris.min.js') }}"></script>
-        <script src="{{ URL::asset('js/raphael-2.1.0.min.js') }}"></script>
-        <script src="{{ URL::asset('js/chosen.jquery.min.js') }}"></script>
-        <script src="{{ URL::asset('components/bootbox/js/bootbox.min.js') }}"></script>
-        <script src="{{ URL::asset('components/momentjs/moment.min.js') }}"></script>
-        {{-- <script src="{{ URL::asset('js/flot/flot.min.js') }}"></script> --}}
-        {{-- <script src="{{ URL::asset('js/flot/flot.resize.min.js') }}"></script> --}}
-        {{-- <script src="{{ URL::asset('js/dashboard.js') }}"></script> --}}
-        {{-- <script src="{{ URL::asset('js/dropzone.min.js') }}"></script> --}}
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- jQuery v3.3.1 (necessary for Bootstrap's JavaScript plugins) -->
         <script src="{{ URL::asset('components/jquery/jquery.min.js') }}"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="{{ URL::asset('components/bootstrap/js/bootstrap.min.js') }}"></script>
+
         @stack('scripts')
     </body>
 </html>

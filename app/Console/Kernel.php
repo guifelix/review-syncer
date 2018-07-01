@@ -24,8 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->call('\App\Http\Controllers\ReviewsController@getRestReview')->hourly();
-        $schedule->command('fetch:reviews')->everyThirtyMinutes();
+        $schedule->command('fetch:reviews')
+        ->everyThirtyMinutes()
+        ->runInBackground()
+        ->withoutOverlapping()
+        ->sendOutputTo(storage_path('logs/commands/job_scheduler.log'), true);
     }
 
     /**

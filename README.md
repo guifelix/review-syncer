@@ -100,6 +100,7 @@ Since Bold Commerce stack mainly consist of these technologies, they were chosen
 
   ```
   CREATE USER 'bold'@'%' IDENTIFIED BY 'builders';
+  GRANT ALL PRIVILEGES ON *.* TO 'bold'@'%';
   ```
   this user is just for the application
 

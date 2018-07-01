@@ -1,4 +1,6 @@
 $.extend( true, $.fn.dataTable.defaults, {
+    ordering: true,
+    searching: true,
     processing: true,
     serverSide: true,
     ajax: $.fn.dataTable.pipeline( {

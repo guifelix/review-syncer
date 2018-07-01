@@ -49,21 +49,13 @@ class FetchReviews extends Command
                 $client = new Client();
                 $output = $client->request('GET',"https://apps.shopify.com/" . $product . "/reviews.json");
                 $body = $output->getBody();
-                // $data[$product] = json_decode($body);
-
                 $data = json_decode($body);
+
                 foreach ($data->reviews as $reviews) {
                     $token = $this->createToken($reviews);
                     $this->insertUpdate($reviews, $product, $token);
                 }
             }
-
-            // foreach ($data as $product => $data) {
-            //     foreach ($data->reviews as $reviews) {
-            //         $token = $this->createToken($reviews);
-            //         $this->insertUpdate($reviews, $product, $token);
-            //     }
-            // }
 
             $this->info('Fetched all reviews!');
         } catch (\Exception $ex) {
@@ -100,6 +92,7 @@ class FetchReviews extends Command
         DB::beginTransaction();
         if (empty($objReview)) {
             try {
+                $this->line('Review not found, trying to insert new review');
                 $timestamp = new DateTime($reviews->created_at);
                 $created_at = $timestamp->format('Y-m-d H:i:s');
 
@@ -121,7 +114,9 @@ class FetchReviews extends Command
                 Log::error('Couldn\'t add the review', ['message'=>$ex->getMessage()]);
             }
         } else {
+            $this->line('Review found');
             if ($objReview->star_rating !== $reviews->star_rating) {
+                $this->line('New rating, trying to update review');
                 try {
                     $objReview->shopify_domain       = $reviews->shop_domain;
                     $objReview->app_slug             = $reviews->app_slug;
@@ -140,7 +135,8 @@ class FetchReviews extends Command
                     Log::error('Couldn\'t update the review', ['message'=>$ex->getMessage()]);
                 }
             }
+            $this->comment('Same rating, review wasn\'t updated');
         }
-
     }
+
 }

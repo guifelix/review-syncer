@@ -24,10 +24,14 @@ class ReviewsController extends Controller
      * Fetches the reviews from database
      * @return [json] [json for the datatables plugin]
      */
-    public function jsonReviews()
+    public function jsonReviews($products = null)
     {
         try {
-            $objReviews = ShopifyAppReviews::whereIn('app_slug',products())->get();
+            if ($products) {
+                $objReviews = ShopifyAppReviews::where('app_slug',$products)->get();
+            } else {
+                $objReviews = ShopifyAppReviews::whereIn('app_slug',products())->get();
+            }
             return Datatables::of($objReviews)->make(true);
         } catch (\Exception $ex) {
             Log::error('Couldn\'t fetch the reviews from database', ['message'=>$ex->getMessage()]);

@@ -14,11 +14,18 @@ services:
   db:
     image: mysql:5.7
     restart: always
-    ports:
-      - 3306:3306
     volumes:
      - /var/lib/mysql
     environment:
-     - MYSQL_DATABASE="bold_reviews"
-     - MYSQL_ROOT_PASSWORD="supersecret"
-     - MYSQL_ROOT_HOST="172.*.*.*"
+     MYSQL_DATABASE: bold_reviews
+     MYSQL_ROOT_PASSWORD: supersecret
+     MYSQL_ROOT_HOST: 172.*.*.*
+
+  app:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - 81:80
+    environment:
+      - PMA_ARBITRARY=1

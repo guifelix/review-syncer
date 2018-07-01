@@ -20,10 +20,13 @@
 
     Route::group(['prefix' => 'Reviews', 'namespace' => 'Reviews'], function(){
         Route::get('/','ReviewsController@index')->name('reviews.index');
-        Route::match(['get','post'],'jsonReviews','ReviewsController@jsonReviews')->name('jsonReviews');
+        Route::match(['get','post'],'jsonReviews/{product?}','ReviewsController@jsonReviews')->name('jsonReviews');
 
-        Route::get('/refresh', function () {
-            $refresh = Artisan::call('fetch:reviews');
-        });
+        /**
+         * Next step, create button to refresh
+         */
+        // Route::get('/refresh', function () {
+        //     $refresh = Artisan::call('fetch:reviews');
+        // });
 
     });

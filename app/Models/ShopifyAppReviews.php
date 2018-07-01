@@ -8,5 +8,5 @@ class ShopifyAppReviews extends Model
 {
   protected $table = 'shopify_app_reviews';
   protected $primaryKey = 'id';
-  public $timestamps = true;
+  public $timestamps = false;
 }
