@@ -74,7 +74,7 @@ if (!function_exists('products')){
     function products($type = null){
         $type = str_replace(' ', '', strtolower($type));
         switch ($type) {
-            case 'keyvalArray':
+            case 'keyvalarray':
                 $products = [
                      'product-upsell'    => 'product-upsell'
                     ,'product-discount'  => 'product-discount'
@@ -92,7 +92,7 @@ if (!function_exists('products')){
                     ,'the-bold-brain'    => 'the-bold-brain'
                 ];
                 break;
-            case 'keyvalObject':
+            case 'keyvalobject':
                 $products = (object)[
                      'product-upsell'    => 'product-upsell'
                     ,'product-discount'  => 'product-discount'
@@ -110,7 +110,7 @@ if (!function_exists('products')){
                     ,'the-bold-brain'    => 'the-bold-brain'
                 ];
                 break;
-            case 'valObject':
+            case 'valobject':
                 $products = (object)[
                      'product-upsell'
                     ,'product-discount'
@@ -128,7 +128,7 @@ if (!function_exists('products')){
                     ,'the-bold-brain'
                 ];
                 break;
-            case 'valArray':
+            case 'valarray':
                 $products = [
                      'product-upsell'
                     ,'product-discount'
