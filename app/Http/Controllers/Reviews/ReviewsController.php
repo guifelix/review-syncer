@@ -10,6 +10,7 @@ use App\Models\ShopifyAppReviews;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Artisan;
 use DB;
 
 class ReviewsController extends Controller
@@ -34,6 +35,22 @@ class ReviewsController extends Controller
             }
             return Datatables::of($objReviews)->make(true);
         } catch (\Exception $ex) {
+            Log::error('Couldn\'t fetch the reviews from database', ['message'=>$ex->getMessage()]);
+            return null;
+        }
+    }
+
+    /**
+     * Fetches the reviews from api
+     * @return [json] [queue status]
+     */
+    public function refreshReviews($products = null)
+    {
+        try {
+            Artisan::queue('fetch:reviews');
+            return response()->json(['status' => true]);
+        } catch (\Exception $ex) {
+            return response()->json(['status' => false]);
             Log::error('Couldn\'t fetch the reviews from database', ['message'=>$ex->getMessage()]);
             return null;
         }

@@ -10,14 +10,25 @@
 
 @section('content')
 
-<div class="flex-center position-ref full-height">
-    <div class="content">
-        <div class="title m-b-md" class="bold-font">
-            Welcome to <strong style="font-weight: 980">Bold</strong> Reviews!
-        </div>
-        <a href="{{ route('reviews.index') }}" class="btn btn-danger btn-lg subtitle" style="text-decoration: none">Look into our reviews</a>
-    </div>
-</div>
+<section class="image-slider slider-all-controls controls-inside parallax pt0 pb0 height-40">
+    <ul class="slides">
+        <li class="overlay image-bg">
+            <div class="background-image-holder">
+                <img alt=" - " class="background-image" src="{{ URL::asset('images/analytics.jpg') }}">
+            </div>
+            <div class="container v-align-transform">
+                <div class="row text-center">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h1 class="title-h2 mb-xs-16 main-header">
+                            We help <strong>tens of thousands</strong> of eCommerce stores <strong><br class="hidden-xs">increase their online sales</strong> every day.
+                        </h1>
+                        <a class="btn btn-lg btn-filled inner-link" href="{{ route('reviews.index') }}"> See our reviews</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</section>
 
 @endsection
 

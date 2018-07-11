@@ -16,45 +16,55 @@
 
 @section('content')
 
-<div class="bold-white">
-        <a href="{{ url()->previous() }}" class="btn btn-danger btn-lg subtitle" style="text-decoration: none">Home</a>
-    <div class="row">
-        <div class="flex-center position-ref">
-            <div class="title " class="bold-font">
-                See our reviews!
+<section id="reviews">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <h1 class="title-h2 mb-xs-16 main-header">
+                    See our product's <strong>reviews</strong>.
+                </h1>
+                <hr class="title-spacer center">
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            {{ Form::bsSelect('Product',null,products(),null,['placeholder' => 'Select one product','required'=>true, 'id'=>'product']) }}
+</section>
+<section id="reviewsList">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-3">
+                {{ Form::bsSelect('Product',null,camelize(products('keyvalArray')),null,['placeholder' => 'Select one product','required'=>true, 'id'=>'product']) }}
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-lg btn-filled inner-link btnRefresh" onclick="refreshReviews()">
+                    <i class="fas fa-sync-alt"></i> Refresh list
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="contentpanel">
-            {{-- <div class="row"> --}}
-                <div class="col-md-12">
-                    <div class="dataTable_wrapper">
-                        <table class="table table-striped table-bordered table-hover" id="tableReviews" width="100%" >
-                            <thead class="active row">
-                                <tr>
-                                    <th class="sorting_disabled" style="text-align: center;">id</th>
-                                    <th style="text-align: center;">Shopify domain</th>
-                                    <th style="text-align: center;">App Slug</th>
-                                    <th style="text-align: center;">Star Rating</th>
-                                    <th style="text-align: center;">Previus Star Rating</th>
-                                    <th style="text-align: center;">Update Date</th>
-                                    <th style="text-align: center;">Creation Date</th>
-                                </tr>
-                            </thead>
-                        </table>
+        <div class="row">
+            <div class="contentpanel">
+                {{-- <div class="row"> --}}
+                    <div class="col-md-12">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="tableReviews" width="100%" >
+                                <thead class="active row">
+                                    <tr>
+                                        <th class="sorting_disabled" style="text-align: center;">id</th>
+                                        <th style="text-align: center;">Shopify domain</th>
+                                        <th style="text-align: center;">Bold Product</th>
+                                        <th style="text-align: center;">Rating</th>
+                                        <th style="text-align: center;">Previus Rating</th>
+                                        <th style="text-align: center;">Update Date</th>
+                                        <th style="text-align: center;">Creation Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            {{-- </div> --}}
+                {{-- </div> --}}
+            </div>
         </div>
     </div>
-</div>
-
+</section>
 
 @endsection
 @push('scripts')
@@ -80,6 +90,10 @@
                             data: 'app_slug',
                             class: 'text-center',
                             searchable: false,
+                            render: function(data) {
+                                return camelize(data);
+
+                            }
                         },
                         {
                             data: 'star_rating',
@@ -116,12 +130,29 @@
                 });
 
                 $('#product').on('change',function(){
-                    let product = $('#product option:selected').text();
+                    let product = $('#product option:selected').val();
                     tableReviews.ajax.url( `{{ route( 'jsonReviews' ) }}/${product}` ).load();
                 });
 
-
         }); // end of function
+
+        function refreshReviews(){
+            $.ajax({
+                url: "{!! route('jsonRefresh') !!}" ,
+                type: 'post',
+                data:{
+                    _token: '{!! csrf_token() !!}',
+                },
+                success: function(data) {
+                    if (data.status == true) {
+                         $('#tableReviews').DataTable().ajax.url( `{{ route( 'jsonReviews' ) }}` ).load();
+                         $('#tableReviews').DataTable().clearPipeline().draw();
+                    }
+                }
+            });
+        }
+
+
 
     </script>
 @endpush

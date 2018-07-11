@@ -127,15 +127,37 @@ Since Bold Commerce stack mainly consist of these technologies, they were chosen
   php artisan fetch:reviews
   ```
 
-* 10) access the localhost on your web browser, click on the button and select one of the bold products to see the filtering on the table or just type anything on the seachbox.
+* 10) To setup the fetching to run every 30min you can enter the webphp container (item 6) and run the following commands
+  ```
+  crontab -e
+  ```
+  then paste at the end of the file:
+  ```
+  */30 * * * * sh /var/www/html/scripts/shellFetch.sh >> /var/log/crontab_fetch.log 2>&1
+  @reboot sh /var/www/html/scripts/shellFetch.sh >> /var/log/crontab_fetch.log 2>&1
+  ```
+  finally, you can exit the editor by pressing ``` ctrl+o ``` then hitting ```enter``` and ```ctrl+c``` to exit
+
+  and starting the cron service:
+
+  ```
+  service cron start
+  ```
+
+* 11) if you want to force the command to fetch, just run inside the webphp container (item 6):
+  ```
+  php artisan fetch:reviews
+  ```
+
+* 12) access the localhost on your web browser, click on the button and select one of the bold products to see the filtering on the table or just type anything on the seachbox.
 
 
 ## Next Steps:
 
-* Create test classes
-* Improve UI by changing the list presentation
-* Improve UX by changing the navigation to the list and the list itself
-* Creating graphs and doing data analysis (like the most reviewed product or the best reviewed to start with)
-* Improve the list view to handle empty database and include a button to force the REST consumption
-* Make the fetch command run on startup
+- [ ] Create test classes
+- [x] ~~Improve UI by changing the list presentation~~
+- [x] ~~Improve UX by changing the navigation to the list and the list itself~~
+- [ ] Creating graphs and doing data analysis (like the most reviewed product or the best reviewed to start with)
+- [ ] Improve the list view to handle empty database and include a button to force the REST consumption
+- [x] ~~Make the fetch command run on startup~~
 

@@ -66,25 +66,131 @@ if (!function_exists('in_array_r')){
 }
 
 if (!function_exists('products')){
-    function products(){
-        $products = [
-             'product-upsell'
-            ,'product-discount'
-            ,'store-locator'
-            ,'product-options'
-            ,'quantity-breaks'
-            ,'product-bundles'
-            ,'customer-pricing'
-            ,'product-builder'
-            ,'social-triggers'
-            ,'recurring-orders'
-            ,'multi-currency'
-            ,'quickbooks-online'
-            ,'xero'
-            ,'the-bold-brain'
-        ];
+    /**
+     * Return an array of the bold's products
+     * @param  string $type 'keyvalArray', 'keyvalObject', 'valObject', 'valArray' or null
+     * @return array       array|object
+     */
+    function products($type = null){
+        $type = str_replace(' ', '', strtolower($type));
+        switch ($type) {
+            case 'keyvalArray':
+                $products = [
+                     'product-upsell'    => 'product-upsell'
+                    ,'product-discount'  => 'product-discount'
+                    ,'store-locator'     => 'store-locator'
+                    ,'product-options'   => 'product-options'
+                    ,'quantity-breaks'   => 'quantity-breaks'
+                    ,'product-bundles'   => 'product-bundles'
+                    ,'customer-pricing'  => 'customer-pricing'
+                    ,'product-builder'   => 'product-builder'
+                    ,'social-triggers'   => 'social-triggers'
+                    ,'recurring-orders'  => 'recurring-orders'
+                    ,'multi-currency'    => 'multi-currency'
+                    ,'quickbooks-online' => 'quickbooks-online'
+                    ,'xero'              => 'xero'
+                    ,'the-bold-brain'    => 'the-bold-brain'
+                ];
+                break;
+            case 'keyvalObject':
+                $products = (object)[
+                     'product-upsell'    => 'product-upsell'
+                    ,'product-discount'  => 'product-discount'
+                    ,'store-locator'     => 'store-locator'
+                    ,'product-options'   => 'product-options'
+                    ,'quantity-breaks'   => 'quantity-breaks'
+                    ,'product-bundles'   => 'product-bundles'
+                    ,'customer-pricing'  => 'customer-pricing'
+                    ,'product-builder'   => 'product-builder'
+                    ,'social-triggers'   => 'social-triggers'
+                    ,'recurring-orders'  => 'recurring-orders'
+                    ,'multi-currency'    => 'multi-currency'
+                    ,'quickbooks-online' => 'quickbooks-online'
+                    ,'xero'              => 'xero'
+                    ,'the-bold-brain'    => 'the-bold-brain'
+                ];
+                break;
+            case 'valObject':
+                $products = (object)[
+                     'product-upsell'
+                    ,'product-discount'
+                    ,'store-locator'
+                    ,'product-options'
+                    ,'quantity-breaks'
+                    ,'product-bundles'
+                    ,'customer-pricing'
+                    ,'product-builder'
+                    ,'social-triggers'
+                    ,'recurring-orders'
+                    ,'multi-currency'
+                    ,'quickbooks-online'
+                    ,'xero'
+                    ,'the-bold-brain'
+                ];
+                break;
+            case 'valArray':
+                $products = [
+                     'product-upsell'
+                    ,'product-discount'
+                    ,'store-locator'
+                    ,'product-options'
+                    ,'quantity-breaks'
+                    ,'product-bundles'
+                    ,'customer-pricing'
+                    ,'product-builder'
+                    ,'social-triggers'
+                    ,'recurring-orders'
+                    ,'multi-currency'
+                    ,'quickbooks-online'
+                    ,'xero'
+                    ,'the-bold-brain'
+                ];
+                break;
+            default:
+                $products = [
+                     'product-upsell'
+                    ,'product-discount'
+                    ,'store-locator'
+                    ,'product-options'
+                    ,'quantity-breaks'
+                    ,'product-bundles'
+                    ,'customer-pricing'
+                    ,'product-builder'
+                    ,'social-triggers'
+                    ,'recurring-orders'
+                    ,'multi-currency'
+                    ,'quickbooks-online'
+                    ,'xero'
+                    ,'the-bold-brain'
+                ];
+                break;
+        }
 
         return $products;
     }
 }
+
+if (!function_exists('camelize')){
+    /**
+     * Function to convert string to camel case
+     * it takes strings separated with '-','.' and '_' and replaces with spaces and then converts each word to camel case.
+     * e.g. camel-case -> Camel Case
+     * @param  array|string $string Array or string to be converted
+     * @return array|string         Array or string converted
+     */
+    function camelize($string){
+        if (is_array($string)) {
+            foreach ($string as $key => $str) {
+                $camel[$key] = camelize($str);
+            }
+        } else {
+            $camel = ucwords(str_replace(['-','.','_'], ' ', $string));
+        }
+
+        return $camel;
+
+    }
+}
+
+
 

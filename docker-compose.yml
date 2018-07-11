@@ -1,11 +1,13 @@
 version: '3'
 services:
   webphp:
-    image: edersondev/php7
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
+        - "85:80"
     volumes:
-      - ~/Desktop/projetos/vanhackathon230618/review_syncer:/var/www/html
+      - /home/gmaciel/docker/bold/review_syncer:/var/www/html
     links:
      - db:mysql
     environment:
@@ -15,17 +17,17 @@ services:
     image: mysql:5.7
     restart: always
     volumes:
-     - /var/lib/mysql
+      - /var/lib/mysql
     environment:
      MYSQL_DATABASE: bold_reviews
-     MYSQL_ROOT_PASSWORD: supersecret
-     MYSQL_ROOT_HOST: 172.*.*.*
+     MYSQL_ROOT_PASSWORD: builders
+     MYSQL_ROOT_HOST: "%"
 
   app:
     image: phpmyadmin/phpmyadmin:latest
     links:
       - db
     ports:
-      - 81:80
+      - 86:80
     environment:
       - PMA_ARBITRARY=1

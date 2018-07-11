@@ -1,55 +1,47 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Jobs;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\Log;
-use App\Models\ShopifyAppReviews;
-use Illuminate\Console\Command;
-use GuzzleHttp\Client;
-use Carbon\Carbon;
-use DateTime;
 use DB;
+use DateTime;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Illuminate\Bus\Queueable;
+use App\Models\ShopifyAppReviews;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
-class FetchReviews extends Command
+class FetchReviews implements ShouldQueue
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'fetch:reviews';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public $tries = 10;
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Fetch bold product\'s reviews from a REST API';
-
-    /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @return void
      */
     public function __construct()
     {
-        parent::__construct();
+        //
     }
 
     /**
-     * Execute the console command.
+     * Execute the job.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
         try {
             foreach (products() as $product) {
                 $client = new Client();
-                $output = $client->request('GET',"https://apps.shopify.com/" . $product . "/reviews.json",
-                    ['proxy' => 'http://proxy.saude.gov:80']
-                );
+                $output = $client->request('GET',"https://apps.shopify.com/" . $product . "/reviews.json");
                 $body = $output->getBody();
                 $data = json_decode($body);
 
@@ -59,9 +51,7 @@ class FetchReviews extends Command
                 }
             }
 
-            $this->info('Fetched all reviews!');
         } catch (\Exception $ex) {
-            $this->error('Could\'t fetch the review: ' . $ex->getMessage());
             Log::error('Couldn\'t fetch the reviews', ['message'=>$ex->getMessage()]);
         }
     }
@@ -94,7 +84,6 @@ class FetchReviews extends Command
         DB::beginTransaction();
         if (empty($objReview)) {
             try {
-                $this->line('Review not found, trying to insert new review');
                 $timestamp = new DateTime($reviews->created_at);
                 $created_at = $timestamp->format('Y-m-d H:i:s');
 
@@ -109,16 +98,12 @@ class FetchReviews extends Command
                 $newReview->save();
 
                 DB::commit();
-                $this->info('Review inserted: ' . $newReview->id);
             }  catch (\Exception $ex){
                 DB::rollBack();
-                $this->error('Could\'t add the review: ' . $ex->getMessage());
                 Log::error('Couldn\'t add the review', ['message'=>$ex->getMessage()]);
             }
         } else {
-            $this->line('Review found');
             if ($objReview->star_rating !== $reviews->star_rating) {
-                $this->line('New rating, trying to update review');
                 try {
                     $objReview->previous_star_rating = $objReview->star_rating;
                     $objReview->updated_at           = date('Y-m-d H:i:s');
@@ -128,14 +113,11 @@ class FetchReviews extends Command
                     $objReview->save();
 
                     DB::commit();
-                    $this->info('Review update');
                 }  catch (\Exception $ex){
                     DB::rollBack();
-                    $this->error('Could\'t update the review: ' . $ex->getMessage());
                     Log::error('Couldn\'t update the review', ['message'=>$ex->getMessage()]);
                 }
             }
-            $this->comment('Same rating, review wasn\'t updated');
         }
     }
 

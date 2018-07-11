@@ -392,6 +392,7 @@ class ComposerStaticInit8e944661719fdff1838dbb79f7b47895
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Jobs\\FetchReviews' => __DIR__ . '/../..' . '/app/Jobs/FetchReviews.php',
         'App\\Models\\ShopifyAppReviews' => __DIR__ . '/../..' . '/app/Models/ShopifyAppReviews.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AssetsServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AssetsServiceProvider.php',

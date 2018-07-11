@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Artisan;
 use DB;
+use App\Jobs\FetchReviews;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
         // if (empty($data)) {
             // $fetch = Artisan::call('fetch:reviews');
         // }
+
         return view('welcome');
     }
 
