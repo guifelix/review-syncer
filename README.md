@@ -91,43 +91,30 @@ Since Bold Commerce stack mainly consist of these technologies, they were chosen
   docker-compose up -d
   ```
 
-* 4) Execute the mysql as root
-
-  ```
-  docker exec -it reviewsyncer_db_1 mysql -uroot
-  ```
-* 5)
-
-  ```
-  CREATE USER 'bold'@'%' IDENTIFIED BY 'builders';
-  GRANT ALL PRIVILEGES ON *.* TO 'bold'@'%';
-  ```
-  this user is just for the application
-
-* 6) to enter the application container:
+* 4) to enter the application container:
   you can exit the container by executing ``` exit ``` 2 times and then:
   ```
   docker-compose exec -it reviewsyncer_webapp_1 /bin/bash
   ```
   or you could open a new terminal and type just the last command
 
-* 7) to update the project, run the following command on the application container:
+* 5) to update the project, run the following command on the application container:
 
   ```
   composer update
   ```
 
-* 8) to create the table, run the following command on the application container:
+* 6) to create the table, run the following command on the application container:
     ```
   php artisan migrate
   ```
 
-* 9) Since the fetch command isn't set to run on startup run the commands:
+* 7) Since the fetch command isn't set to run on startup run the commands:
   ```
   php artisan fetch:reviews
   ```
 
-* 10) To setup the fetching to run every 30min you can enter the webphp container (item 6) and run the following commands
+* 8) To setup the fetching to run every 30min you can enter the webphp container (item 6) and run the following commands
   ```
   crontab -e
   ```
@@ -144,12 +131,12 @@ Since Bold Commerce stack mainly consist of these technologies, they were chosen
   service cron start
   ```
 
-* 11) if you want to force the command to fetch, just run inside the webphp container (item 6):
+* 9) if you want to force the command to fetch, just run inside the webphp container (item 6):
   ```
   php artisan fetch:reviews
   ```
 
-* 12) access the localhost on your web browser, click on the button and select one of the bold products to see the filtering on the table or just type anything on the seachbox.
+* 10) access the localhost on your web browser, click on the button and select one of the bold products to see the filtering on the table or just type anything on the seachbox.
 
 
 ## Next Steps:
